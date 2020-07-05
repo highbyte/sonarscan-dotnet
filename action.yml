@@ -1,0 +1,35 @@
+name: "sonarscan-dotnet"
+description: "Sonarscanner for .NET Core with pull request decoration support."
+author: "Highbyte"
+
+inputs:
+  sonarProjectKey:
+    description: "The key of the SonarQube project"
+    required: true
+  sonarProjectName:
+    description: "The name of the SonarQube project"
+    required: true
+  sonarOrganization:
+    description: "The name of the SonarQube organization"
+    required: true
+  dotnetBuildArguments:
+    description: "Optional command arguments to dotnet build"
+    required: false
+  dotnetTestArguments:
+    description: "Optional command arguments to dotnet test"
+    required: false
+  sonarBeginArguments:
+    description: "Optional extra command arguments the the SonarScanner 'begin' command"
+    required: false
+  sonarHostname:
+    description: "The SonarQube server URL. For SonarCloud, don't set this setting."
+    default: "https://sonarcloud.io"
+    required: false
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+
+branding:
+  icon: 'check-square'
+  color: 'blue'
