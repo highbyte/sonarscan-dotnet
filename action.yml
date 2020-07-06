@@ -13,10 +13,13 @@ inputs:
     description: "The name of the SonarQube organization"
     required: true
   dotnetBuildArguments:
-    description: "Optional command arguments to dotnet build"
+    description: "Optional command arguments to 'dotnet build'"
     required: false
   dotnetTestArguments:
-    description: "Optional command arguments to dotnet test"
+    description: "Optional command arguments to 'dotnet test'"
+    required: false
+  dotnetDisableTests:
+    description: "Optional. Set to 1 or true to not run 'dotnet test' command"
     required: false
   sonarBeginArguments:
     description: "Optional extra command arguments the the SonarScanner 'begin' command"

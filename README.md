@@ -71,6 +71,26 @@ Also includes test results.
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+## Skip tests
+
+``` yaml
+    - name: SonarScanner for .NET Core with pull request decoration support
+      uses: highbyte/sonarscan-dotnet
+      with:
+        # The key of the SonarQube project
+        sonarProjectKey: your_projectkey
+        # The name of the SonarQube project
+        sonarProjectName:  your_projectname
+        # The name of the SonarQube Organization
+        sonarOrganization: your_organization
+        # Optional. Set to 1 or true to not run 'dotnet test' command
+        dotnetDisableTests: true
+        
+  env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
 # Secrets
 - `SONAR_TOKEN` – **Required** this is the token used to authenticate access to SonarCloud. You can generate a token on your [Security page in SonarCloud](https://sonarcloud.io/account/security/). You can set the `SONAR_TOKEN` environment variable in the "Secrets" settings page of your repository.
 - *`GITHUB_TOKEN` – Provided by Github (see [Authenticating with the GITHUB_TOKEN](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token)).*
