@@ -1,4 +1,6 @@
 # SonarScanner for .NET Core
+![Docker Image build only](https://github.com/highbyte/sonarscan-dotnet/workflows/Docker%20Image%20build%20only/badge.svg)
+
 SonarScanner for .NET Core for use in Github Actions, with automatic PR detection, analysis and decoration.
 
 # Usage examples
