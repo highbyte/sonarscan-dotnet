@@ -57,8 +57,8 @@ Also includes test results.
         sonarProjectName:  your_projectname
         # The name of the SonarQube Organization
         sonarOrganization: your_organization
-        # Optional command arguments to dotnet dbuild
-        dotnetTestArguments: ./src
+        # Optional command arguments to dotnet build
+        dotnetBuildArguments: ./src
         # Optional command arguments to dotnet test
         dotnetTestArguments: ./src --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
         # Optional extra command arguments the the SonarScanner 'begin' command
