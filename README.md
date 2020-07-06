@@ -3,6 +3,8 @@
 
 SonarScanner for .NET Core for use in Github Actions, with automatic PR detection, analysis and decoration.
 
+<img src="images/sonarqube-pullrequest-decoration-fail.png" width="50%" height="50%" title="SonarQube pull request decoration fail"><img src="images/sonarqube-pullrequest-decoration-pass.png" width="50%" height="50%" title="SonarQube pull request decoration pass">
+
 # Usage examples
 
 ## Simple use with SonarCloud
