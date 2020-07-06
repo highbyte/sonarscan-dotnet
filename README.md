@@ -3,6 +3,8 @@
 
 SonarScanner for .NET Core for use in Github Actions, with automatic PR detection, analysis and decoration.
 
+<img src="images/sonarqube-pullrequest-decoration-fail.png" width="50%" height="50%" title="SonarQube pull request decoration fail"><img src="images/sonarqube-pullrequest-decoration-pass.png" width="50%" height="50%" title="SonarQube pull request decoration pass">
+
 # Usage examples
 
 ## Simple use with SonarCloud
@@ -144,3 +146,21 @@ inputs:
     required: false
 ```
 
+# Troubleshooting
+## Build error "ERROR: Could not find a default branch to fall back on."
+If this error occurs in the build log, you can try this:
+* You may have to manually create the project in SonarQube/SonarCloud dashboard first. Make sure the Action input parameter sonarProjectKey (and sonarOrganization for SonarCloud) matches the ones in SonarQube/SonarCloud.
+* Make sure you have correct SONAR_TOKEN set. See [Secrects](#secrets) above.
+
+## SonarQube/SonarCloud dashboard warning "Shallow clone detected during the analysis..."
+If the SonarQube/SonarCloud dashboard shows a warning message in the top right ("Last analyzis had x warning"), and the message is
+
+`"Shallow clone detected during the analysis. Some files will miss SCM information. This will affect features like auto-assignment of issues. Please configure your build to disable shallow clone."`
+
+This can be fixed by modifying the Git checkout action fetch-depth parameter: 
+
+``` yaml
+- uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+```
