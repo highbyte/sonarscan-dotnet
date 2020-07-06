@@ -11,10 +11,6 @@ if [ -z "$INPUT_SONARPROJECTNAME" ]; then
     echo "Input parameter sonarProjectName is required"
     exit 1
 fi
-if [ -z "$INPUT_SONARORGANIZATION" ]; then
-    echo "Input parameter sonarOrganization is required"
-    exit 1
-fi
 if [ -z "$SONAR_TOKEN" ]; then
     echo "Environment parameter SONAR_TOKEN is required"
     exit 1
@@ -85,7 +81,10 @@ echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
 #-----------------------------------
 # Build Sonarscanner begin command
 #-----------------------------------
-sonar_begin_cmd="/dotnet-sonarscanner begin /k:\"${INPUT_SONARPROJECTKEY}\" /n:\"${INPUT_SONARPROJECTNAME}\" /o:\"${INPUT_SONARORGANIZATION}\" /d:sonar.login=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"${INPUT_SONARHOSTNAME}\""
+sonar_begin_cmd="/dotnet-sonarscanner begin /k:\"${INPUT_SONARPROJECTKEY}\" /n:\"${INPUT_SONARPROJECTNAME}\" /d:sonar.login=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"${INPUT_SONARHOSTNAME}\""
+if [ -n "$INPUT_SONARORGANIZATION" ]; then
+    sonar_begin_cmd="$sonar_begin_cmd /o:\"${INPUT_SONARORGANIZATION}\""
+fi
 if [ -n "$INPUT_SONARBEGINARGUMENTS" ]; then
     sonar_begin_cmd="$sonar_begin_cmd $INPUT_SONARBEGINARGUMENTS"
 fi

@@ -5,7 +5,7 @@ SonarScanner for .NET Core for use in Github Actions, with automatic PR detectio
 
 # Usage examples
 
-## Simple use
+## Simple use with SonarCloud
 
 ``` yaml
     - name: SonarScanner for .NET Core with pull request decoration support
@@ -15,7 +15,7 @@ SonarScanner for .NET Core for use in Github Actions, with automatic PR detectio
         sonarProjectKey: your_projectkey
         # The name of the SonarQube project
         sonarProjectName:  your_projectname
-        # The name of the SonarQube Organization
+        # The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting.
         sonarOrganization: your_organization
 
   env:
@@ -34,7 +34,7 @@ Also includes test results.
         sonarProjectKey: your_projectkey
         # The name of the SonarQube project
         sonarProjectName:  your_projectname
-        # The name of the SonarQube Organization
+        # The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting.
         sonarOrganization: your_organization
         # Optional command arguments to dotnet test
         dotnetTestArguments: --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
@@ -57,7 +57,7 @@ Also includes test results.
         sonarProjectKey: your_projectkey
         # The name of the SonarQube project
         sonarProjectName:  your_projectname
-        # The name of the SonarQube Organization
+        # The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting.
         sonarOrganization: your_organization
         # Optional command arguments to dotnet build
         dotnetBuildArguments: ./src
@@ -91,6 +91,23 @@ Also includes test results.
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+## Use with self-hosted SonarQube
+_Note: This has not yet been verified if it works_
+``` yaml
+    - name: SonarScanner for .NET Core with pull request decoration support
+      uses: highbyte/sonarscan-dotnet
+      with:
+        # The key of the SonarQube project
+        sonarProjectKey: your_projectkey
+        # The name of the SonarQube project
+        sonarProjectName:  your_projectname
+        # The SonarQube server URL. For SonarCloud, skip this setting.
+        sonarHostname:  your_selfhosted_sonarqube_hostname
+  env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
 # Secrets
 - `SONAR_TOKEN` – **Required** this is the token used to authenticate access to SonarCloud. You can generate a token on your [Security page in SonarCloud](https://sonarcloud.io/account/security/). You can set the `SONAR_TOKEN` environment variable in the "Secrets" settings page of your repository.
 - *`GITHUB_TOKEN` – Provided by Github (see [Authenticating with the GITHUB_TOKEN](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token)).*
@@ -107,19 +124,22 @@ inputs:
     description: "The name of the SonarQube project"
     required: true
   sonarOrganization:
-    description: "The name of the SonarQube organization"
-    required: true
+    description: "The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting."
+    required: false
   dotnetBuildArguments:
-    description: "Optional command arguments to dotnet build"
+    description: "Optional command arguments to 'dotnet build'"
     required: false
   dotnetTestArguments:
-    description: "Optional command arguments to dotnet test"
+    description: "Optional command arguments to 'dotnet test'"
+    required: false
+  dotnetDisableTests:
+    description: "Optional. Set to 1 or true to not run 'dotnet test' command"
     required: false
   sonarBeginArguments:
     description: "Optional extra command arguments the the SonarScanner 'begin' command"
     required: false
   sonarHostname:
-    description: "The SonarQube server URL. For SonarCloud, leave this setting undefined"
+    description: "The SonarQube server URL. For SonarCloud, skip this setting."
     default: "https://sonarcloud.io"
     required: false
 ```
