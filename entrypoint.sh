@@ -27,6 +27,7 @@ echo "INPUT_SONARPROJECTNAME: $INPUT_SONARPROJECTNAME"
 echo "INPUT_SONARORGANIZATION: $INPUT_SONARORGANIZATION"
 echo "INPUT_DOTNETBUILDARGUMENTS: $INPUT_DOTNETBUILDARGUMENTS"
 echo "INPUT_DOTNETTESTARGUMENTS: $INPUT_DOTNETTESTARGUMENTS"
+echo "INPUT_DOTNETDISABLETESTS: $INPUT_DOTNETDISABLETESTS"
 echo "INPUT_SONARBEGINARGUMENTS: $INPUT_SONARBEGINARGUMENTS"
 echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
 
@@ -57,14 +58,17 @@ echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
 # ---------------------------------------------
 # DEBUG: How to run container manually
 # ---------------------------------------------
+# export SONAR_TOKEN="your_token_from_sonarqube"
+
 # Simulate Github Action input variables  
 # export INPUT_SONARPROJECTKEY="your_projectkey"
 # export INPUT_SONARPROJECTNAME="your_projectname"
 # export INPUT_SONARORGANIZATION="your_organization"
 # export INPUT_DOTNETBUILDARGUMENTS=""
 # export INPUT_DOTNETTESTARGUMENTS=""
+# export INPUT_DOTNETDISABLETESTS=""
 # export INPUT_SONARBEGINARGUMENTS=""
-# export INPUT_SONARHOSTNAME=""
+# export INPUT_SONARHOSTNAME="https://sonarcloud.io"
 
 # Simulate Github Action built-in environment variables
 # export GITHUB_REPOSITORY=theowner/therepo
@@ -74,9 +78,9 @@ echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
 # export GITHUB_BASE_REF=""
 #
 # Build local Docker image
-# docker build /t:sonarscan-dotnet .
+# docker build -t sonarscan-dotnet .
 # Execute Docker container
-# docker run --name sonarscan-dotnet --workdir /github/workspace --rm -e INPUT_SONARPROJECTKEY -e INPUT_SONARPROJECTNAME -e INPUT_SONARORGANIZATION -e INPUT_DOTNETBUILDARGUMENTS -e INPUT_DOTNETTESTARGUMENTS -e INPUT_SONARBEGINARGUMENTS -e INPUT_SONARHOSTNAME -e SONAR_TOKEN -e GITHUB_EVENT_NAME -e GITHUB_REPOSITORY -e GITHUB_REF -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -v "/var/run/docker.sock":"/var/run/docker.sock" -v $(pwd):"/github/workspace" sonarscan-dotnet
+# docker run --name sonarscan-dotnet --workdir /github/workspace --rm -e INPUT_SONARPROJECTKEY -e INPUT_SONARPROJECTNAME -e INPUT_SONARORGANIZATION -e INPUT_DOTNETBUILDARGUMENTS -e INPUT_DOTNETTESTARGUMENTS -e INPUT_DOTNETDISABLETESTS -e INPUT_SONARBEGINARGUMENTS -e INPUT_SONARHOSTNAME -e SONAR_TOKEN -e GITHUB_EVENT_NAME -e GITHUB_REPOSITORY -e GITHUB_REF -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -v "/var/run/docker.sock":"/var/run/docker.sock" -v $(pwd):"/github/workspace" sonarscan-dotnet
 
 #-----------------------------------
 # Build Sonarscanner begin command
@@ -94,14 +98,12 @@ if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
     # sonar.pullrequest.base	            The long-lived branch into which the PR will be merged. Default: master E.G.: master
     # sonar.pullrequest.github.repository	SLUG of the GitHub Repo (owner/repo)
 
-    #Extract Pull Request numer from the GITHUB_REF variable
+    # Extract Pull Request numer from the GITHUB_REF variable
     PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+
+    # Add pull request specific parameters in sonar scanner
     sonar_begin_cmd="$sonar_begin_cmd /d:sonar.pullrequest.key=$PR_NUMBER /d:sonar.pullrequest.branch=$GITHUB_HEAD_REF /d:sonar.pullrequest.base=$GITHUB_BASE_REF /d:sonar.pullrequest.github.repository=$GITHUB_REPOSITORY /d:sonar.pullrequest.provider=github"
 
-    # TODO?: Should sonar.branch.name be set?
-    # Pseudo code
-    # if (!isDefaultBranch)
-    #   sonar_begin_cmd="$sonar_begin_cmd /d:sonar.branch.name=$xxx"
 fi
 
 #-----------------------------------
@@ -125,7 +127,6 @@ if [ -n "$INPUT_DOTNETTESTARGUMENTS" ]; then
     dotnet_test_cmd="$dotnet_test_cmd $INPUT_DOTNETTESTARGUMENTS"
 fi
 
-
 #-----------------------------------
 # Execute shell commands
 #-----------------------------------
@@ -139,9 +140,11 @@ sh -c "$sonar_begin_cmd"
 echo "dotnet_build_cmd: $dotnet_build_cmd"
 sh -c "${dotnet_build_cmd}"
 
-#Run dotnet test command
-echo "dotnet_test_cmd: $dotnet_test_cmd"
-sh -c "${dotnet_test_cmd}"
+#Run dotnet test command (unless user choose not to)
+if ! [[ "${INPUT_DOTNETDISABLETESTS,,}" == "true" || "${INPUT_DOTNETDISABLETESTS}" == "1" ]]; then
+    echo "dotnet_test_cmd: $dotnet_test_cmd"
+    sh -c "${dotnet_test_cmd}"
+fi
 
 #Run Sonarscanner .NET Core "end" command
 echo "sonar_end_cmd: $sonar_end_cmd"
