@@ -10,8 +10,8 @@ inputs:
     description: "The name of the SonarQube project"
     required: true
   sonarOrganization:
-    description: "The name of the SonarQube organization"
-    required: true
+    description: "The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting."
+    required: false
   dotnetBuildArguments:
     description: "Optional command arguments to 'dotnet build'"
     required: false
@@ -25,7 +25,7 @@ inputs:
     description: "Optional extra command arguments the the SonarScanner 'begin' command"
     required: false
   sonarHostname:
-    description: "The SonarQube server URL. For SonarCloud, don't set this setting."
+    description: "The SonarQube server URL. For SonarCloud, skip this setting."
     default: "https://sonarcloud.io"
     required: false
 
