@@ -153,11 +153,11 @@ If this error occurs in the build log, you can try this:
 * Make sure you have correct SONAR_TOKEN set. See [Secrects](#secrets) above.
 
 ## SonarQube/SonarCloud dashboard warning "Shallow clone detected during the analysis..."
-If the SonarQube/SonarCloud dashboard shows a warning message in the top right ("Last analyzis had x warning"), and the message is
+If the SonarQube/SonarCloud dashboard shows a warning message in the top right ("Last analysis had x warning"), and the message is
 
 `"Shallow clone detected during the analysis. Some files will miss SCM information. This will affect features like auto-assignment of issues. Please configure your build to disable shallow clone."`
 
-This can be fixed by modifying the Git checkout action fetch-depth parameter: 
+it can be fixed by modifying the Git checkout action fetch-depth parameter: 
 
 ``` yaml
 - uses: actions/checkout@v2
