@@ -1,7 +1,7 @@
 # SonarScanner for .NET Core
 ![Docker Image build](https://github.com/highbyte/sonarscan-dotnet/workflows/Docker%20Image%20build/badge.svg)
 
-SonarScanner for .NET Core for use in Github Actions, with automatic PR detection, analysis and decoration.
+SonarScanner for .NET Core for use in Github Actions, with automatic pull request detection, analysis and decoration.
 
 <img src="images/sonarqube-pullrequest-decoration-fail.png" width="50%" height="50%" title="SonarQube pull request decoration fail"><img src="images/sonarqube-pullrequest-decoration-pass.png" width="50%" height="50%" title="SonarQube pull request decoration pass">
 
