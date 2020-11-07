@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1.301
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1.403
 
 LABEL "com.github.actions.name"="sonarscan-dotnet"
 LABEL "com.github.actions.description"="Sonarscanner for .NET Core with pull request decoration support."
