@@ -48,6 +48,41 @@ Also includes test results.
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+## Include code coverage with [Coverlet](https://github.com/coverlet-coverage/coverlet)
+
+To `MyProject.Test` add a Nuget packages `coverlet.msbuild` and `coverlet.collector`.
+
+Here is a full example of Github Action yml file where code coverage report is generated and uploaded to SonarQube.io.
+
+``` yaml
+name: Sonarqube Analyze
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: SonarScanner for .NET Core with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@1.0
+      with:
+        sonarProjectKey: your_projectkey
+        sonarProjectName:  your_projectname
+        sonarOrganization: your_organization
+        dotnetBuildArguments: ./src/MyProject/MyProject.csproj
+        dotnetTestArguments: ./src/MyProject.Test/MyProject.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        sonarBeginArguments: /d:sonar.verbose="true" /d:sonar.language="cs" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+```
+
 ## Build subfolder src, and include code coverage
 Also includes test results.
 
