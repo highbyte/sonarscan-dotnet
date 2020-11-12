@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1.403
+FROM mcr.microsoft.com/dotnet/sdk:5.0
 
 LABEL "com.github.actions.name"="sonarscan-dotnet"
 LABEL "com.github.actions.description"="Sonarscanner for .NET Core with pull request decoration support."
@@ -11,7 +11,7 @@ LABEL "maintainer"="Highbyte"
 
 # Version numbers of used software
 ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=4.10.0 \
-    DOTNETCORE_RUNTIME_VERSION=3.1 \
+    DOTNETCORE_RUNTIME_VERSION=5.0 \
     JRE_VERSION=11
 
 # Add Microsoft Debian apt-get feed 
