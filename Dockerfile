@@ -18,6 +18,9 @@ ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=4.10.0 \
 RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb
 
+# Fix JRE Install https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
+mkdir -p /usr/share/man/man1
+
 # Install the .NET Core Runtime for SonarScanner.
 # The warning message "delaying package configuration, since apt-utils is not installed" is probably not an actual error, just a warning.
 # We don't need apt-utils, we won't install it. The image seems to work even with the warning.
