@@ -19,7 +19,7 @@ RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod
     && dpkg -i packages-microsoft-prod.deb
 
 # Fix JRE Install https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
-mkdir -p /usr/share/man/man1
+RUN mkdir -p /usr/share/man/man1
 
 # Install the .NET Core Runtime for SonarScanner.
 # The warning message "delaying package configuration, since apt-utils is not installed" is probably not an actual error, just a warning.
