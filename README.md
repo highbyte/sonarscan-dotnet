@@ -1,7 +1,7 @@
-# SonarScanner for .NET Core
+# SonarScanner for .NET
 ![Docker Image build](https://github.com/highbyte/sonarscan-dotnet/workflows/Docker%20Image%20build/badge.svg)
 
-SonarScanner for .NET 5 & .NET Core for use in Github Actions, with automatic pull request detection, analysis and decoration.
+SonarScanner for .NET for use in Github Actions, with automatic pull request detection, analysis and decoration.
 
 The current version supports .NET 5.
 - For .NET Core 3.1, use version [1.0.2](https://github.com/marketplace/actions/sonarscan-dotnet?version=1.0.2)
@@ -13,7 +13,7 @@ The current version supports .NET 5.
 ## Simple use with SonarCloud
 
 ``` yaml
-    - name: SonarScanner for .NET Core with pull request decoration support
+    - name: SonarScanner for .NET 5 with pull request decoration support
       uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
@@ -32,7 +32,7 @@ The current version supports .NET 5.
 Also includes test results.
 
 ``` yaml
-    - name: SonarScanner for .NET Core with pull request decoration support
+    - name: SonarScanner for .NET 5 with pull request decoration support
       uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
@@ -55,7 +55,7 @@ Also includes test results.
 Also includes test results.
 
 ``` yaml
-    - name: SonarScanner for .NET Core with pull request decoration support
+    - name: SonarScanner for .NET 5 with pull request decoration support
       uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
@@ -79,7 +79,7 @@ Also includes test results.
 ## Skip tests
 
 ``` yaml
-    - name: SonarScanner for .NET Core with pull request decoration support
+    - name: SonarScanner for .NET 5 with pull request decoration support
       uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
@@ -99,7 +99,7 @@ Also includes test results.
 ## Use with self-hosted SonarQube
 
 ``` yaml
-    - name: SonarScanner for .NET Core with pull request decoration support
+    - name: SonarScanner for .NET 5 with pull request decoration support
       uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
