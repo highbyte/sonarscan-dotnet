@@ -94,7 +94,7 @@ Also includes test results.
 ```
 
 ## Use with self-hosted SonarQube
-_Note: This has not yet been verified if it works_
+
 ``` yaml
     - name: SonarScanner for .NET Core with pull request decoration support
       uses: highbyte/sonarscan-dotnet@1.0.2
