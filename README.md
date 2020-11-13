@@ -3,6 +3,9 @@
 
 SonarScanner for .NET Core for use in Github Actions, with automatic pull request detection, analysis and decoration.
 
+The current version supports .NET 5.
+- For .NET Core 3.1, use version [1.0.2](https://github.com/marketplace/actions/sonarscan-dotnet?version=1.0.2)
+
 <img src="images/sonarqube-pullrequest-decoration-fail.png" width="50%" height="50%" title="SonarQube pull request decoration fail"><img src="images/sonarqube-pullrequest-decoration-pass.png" width="50%" height="50%" title="SonarQube pull request decoration pass">
 
 # Usage examples
@@ -11,7 +14,7 @@ SonarScanner for .NET Core for use in Github Actions, with automatic pull reques
 
 ``` yaml
     - name: SonarScanner for .NET Core with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@1.0.2
+      uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -30,7 +33,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET Core with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@1.0.2
+      uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -53,7 +56,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET Core with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@1.0.2
+      uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -77,7 +80,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET Core with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@1.0.2
+      uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -97,7 +100,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET Core with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@1.0.2
+      uses: highbyte/sonarscan-dotnet@2.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
