@@ -1,5 +1,5 @@
 name: "sonarscan-dotnet"
-description: "SonarScanner for .NET 5 with pull request decoration support."
+description: "SonarScanner for .NET with pull request decoration support."
 author: "Highbyte"
 
 inputs:
@@ -12,6 +12,10 @@ inputs:
   sonarOrganization:
     description: "The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting."
     required: false
+  dotnetVersion:
+    description: ".NET SDK version to be used with the project"
+    required: false
+    default: "5.0"
   dotnetBuildArguments:
     description: "Optional command arguments to 'dotnet build'"
     required: false
@@ -31,7 +35,8 @@ inputs:
 
 runs:
   using: "docker"
-  image: "Dockerfile"
+  # TODO: switch latest to an appropriate tag
+  image: "docker://ghcr.io/np-13/sonarscan-dotnet:latest-${{ inputs.dotnetVersion }}"
 
 branding:
   icon: 'check-square'
