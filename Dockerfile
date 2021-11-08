@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 
 LABEL "com.github.actions.name"="sonarscan-dotnet"
-LABEL "com.github.actions.description"="Sonarscanner for .NET 5 with pull request decoration support."
+LABEL "com.github.actions.description"="Sonarscanner for .NET 6 with pull request decoration support."
 LABEL "com.github.actions.icon"="check-square"
 LABEL "com.github.actions.color"="blue"
 
@@ -10,7 +10,7 @@ LABEL "homepage"="https://github.com/highbyte"
 LABEL "maintainer"="Highbyte"
 
 # Version numbers of used software
-ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=5.0.3 \
+ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=5.3.2 \
     DOTNETCORE_RUNTIME_VERSION=5.0 \
     JRE_VERSION=11
 
@@ -21,7 +21,7 @@ RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod
 # Fix JRE Install https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
 RUN mkdir -p /usr/share/man/man1
 
-# Install the .NET 5 Runtime for SonarScanner.
+# Install the .NET Runtime for SonarScanner
 # The warning message "delaying package configuration, since apt-utils is not installed" is probably not an actual error, just a warning.
 # We don't need apt-utils, we won't install it. The image seems to work even with the warning.
 RUN apt-get update -y \
