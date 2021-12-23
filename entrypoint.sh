@@ -26,6 +26,7 @@ echo "INPUT_DOTNETTESTARGUMENTS: $INPUT_DOTNETTESTARGUMENTS"
 echo "INPUT_DOTNETDISABLETESTS: $INPUT_DOTNETDISABLETESTS"
 echo "INPUT_SONARBEGINARGUMENTS: $INPUT_SONARBEGINARGUMENTS"
 echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
+echo "INPUT_APPLYPULLREQUESTPARAMS: $INPUT_APPLYPULLREQUESTPARAMS"
 
 # Environment variables that need to be mapped in Github Action 
 #     env:
@@ -89,7 +90,7 @@ if [ -n "$INPUT_SONARBEGINARGUMENTS" ]; then
     sonar_begin_cmd="$sonar_begin_cmd $INPUT_SONARBEGINARGUMENTS"
 fi
 # Check Github environment variable GITHUB_EVENT_NAME to determine if this is a pull request or not. 
-if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
+if [[ $GITHUB_EVENT_NAME == 'pull_request' && "${INPUT_APPLYPULLREQUESTPARAMS}" == "1" ]]; then
     # Sonarqube wants these variables if build is started for a pull request
     # Sonarcloud parameters: https://sonarcloud.io/documentation/analysis/pull-request/
     # sonar.pullrequest.key	                Unique identifier of your PR. Must correspond to the key of the PR in GitHub or TFS. E.G.: 5

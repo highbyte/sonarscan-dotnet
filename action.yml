@@ -28,11 +28,15 @@ inputs:
     description: "The SonarQube server URL. For SonarCloud, skip this setting."
     default: "https://sonarcloud.io"
     required: false
+  applyPullRequestParams:
+    description: "Whether pull request params should be applied to the Sonar arguments"
+    default: "1"
+    required: false
 
 runs:
   using: "docker"
   image: "Dockerfile"
 
 branding:
-  icon: 'check-square'
-  color: 'blue'
+  icon: "check-square"
+  color: "blue"
