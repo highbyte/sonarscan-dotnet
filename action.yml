@@ -15,6 +15,9 @@ inputs:
   dotnetBuildArguments:
     description: "Optional command arguments to 'dotnet build'"
     required: false
+  dotnetPreBuildCmd:
+    description: "Optional command run before the 'dotnet build'"
+    required: false
   dotnetTestArguments:
     description: "Optional command arguments to 'dotnet test'"
     required: false
