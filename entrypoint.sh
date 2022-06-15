@@ -21,6 +21,7 @@ echo "Github Action input parameters"
 echo "INPUT_SONARPROJECTKEY: $INPUT_SONARPROJECTKEY"
 echo "INPUT_SONARPROJECTNAME: $INPUT_SONARPROJECTNAME"
 echo "INPUT_SONARORGANIZATION: $INPUT_SONARORGANIZATION"
+echo "INPUT_DOTNETPREBUILDCMD: $INPUT_DOTNETPREBUILDCMD"
 echo "INPUT_DOTNETBUILDARGUMENTS: $INPUT_DOTNETBUILDARGUMENTS"
 echo "INPUT_DOTNETTESTARGUMENTS: $INPUT_DOTNETTESTARGUMENTS"
 echo "INPUT_DOTNETDISABLETESTS: $INPUT_DOTNETDISABLETESTS"
@@ -111,6 +112,14 @@ fi
 sonar_end_cmd="/dotnet-sonarscanner end /d:sonar.login=\"${SONAR_TOKEN}\""
 
 #-----------------------------------
+# Build pre build command
+#-----------------------------------
+dotnet_prebuild_cmd="echo NO_PREBUILD_CMD"
+if [ -n "$INPUT_DOTNETPREBUILDCMD" ]; then
+    dotnet_prebuild_cmd="$INPUT_DOTNETPREBUILDCMD"
+fi
+
+#-----------------------------------
 # Build dotnet build command
 #-----------------------------------
 dotnet_build_cmd="dotnet build"
@@ -134,6 +143,10 @@ echo "Shell commands"
 #Run Sonarscanner .NET Core "begin" command
 echo "sonar_begin_cmd: $sonar_begin_cmd"
 sh -c "$sonar_begin_cmd"
+
+#Run dotnet pre build command
+echo "dotnet_prebuild_cmd: $dotnet_prebuild_cmd"
+sh -c "${dotnet_prebuild_cmd}"
 
 #Run dotnet build command
 echo "dotnet_build_cmd: $dotnet_build_cmd"
