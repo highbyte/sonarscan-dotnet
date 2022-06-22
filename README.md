@@ -15,7 +15,7 @@ The current version supports .NET 6
 
 ``` yaml
     - name: SonarScanner for .NET 6 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.1.2
+      uses: highbyte/sonarscan-dotnet@v2.1.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -34,7 +34,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 6 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.1.2
+      uses: highbyte/sonarscan-dotnet@v2.1.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -57,7 +57,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 6 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.1.2
+      uses: highbyte/sonarscan-dotnet@v2.1.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -81,7 +81,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 6 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.1.2
+      uses: highbyte/sonarscan-dotnet@v2.1.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -97,11 +97,33 @@ Also includes test results.
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+## Use pre-build command to add a custom NuGet repository
+
+``` yaml
+    - name: SonarScanner for .NET 6 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.1.3
+      with:
+        # The key of the SonarQube project
+        sonarProjectKey: your_projectkey
+        # The name of the SonarQube project
+        sonarProjectName:  your_projectname
+        # The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting.
+        sonarOrganization: your_organization
+        # Optional command to run before 'dotnet build'. This example adds a NuGet source for other private GitHub Packages registry.
+        dotnetPreBuildCmd: dotnet nuget add source --username your_github_user --password ${{ secrets.MY_PAT_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
+        # Optional command arguments to dotnet build
+        dotnetBuildArguments: ./src
+
+  env:
+    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
 ## Use with self-hosted SonarQube
 
 ``` yaml
     - name: SonarScanner for .NET 6 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.1.2
+      uses: highbyte/sonarscan-dotnet@v2.1.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -135,6 +157,9 @@ inputs:
   dotnetBuildArguments:
     description: "Optional command arguments to 'dotnet build'"
     required: false
+  dotnetPreBuildCmd:
+    description: "Optional command run before the 'dotnet build'"
+    required: false    
   dotnetTestArguments:
     description: "Optional command arguments to 'dotnet test'"
     required: false
