@@ -1,5 +1,5 @@
 name: "sonarscan-dotnet"
-description: "SonarScanner for .NET 6 with pull request decoration support."
+description: "SonarScanner for .NET 7 with pull request decoration support."
 author: "Highbyte"
 
 inputs:
