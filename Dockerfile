@@ -28,6 +28,10 @@ RUN apt-get update -y \
     && apt-get install --no-install-recommends -y apt-transport-https \
     && apt-get update -y \
     && apt-get install --no-install-recommends -y aspnetcore-runtime-$DOTNETCORE_RUNTIME_VERSION
+    
+# Install NodeJS
+RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - \
+    && apt-get install -y nodejs
 
 # Install Java Runtime for SonarScanner
 RUN apt-get install --no-install-recommends -y openjdk-$JRE_VERSION-jre
