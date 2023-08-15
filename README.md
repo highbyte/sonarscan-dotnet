@@ -4,7 +4,7 @@
 SonarScanner for .NET for use in Github Actions, with automatic pull request detection, analysis and decoration.
 
 The current version supports .NET 7
-- For .NET 6, use version [2.1.3](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.1.3)
+- For .NET 6, use version [2.1.4](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.1.4)
 - For .NET 5, use version [2.0](https://github.com/marketplace/actions/sonarscan-dotnet?version=2.0)
 - For .NET Core 3.1, use version [1.0.2](https://github.com/marketplace/actions/sonarscan-dotnet?version=1.0.2)
 
