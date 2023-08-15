@@ -10,9 +10,9 @@ LABEL "homepage"="https://github.com/highbyte"
 LABEL "maintainer"="Highbyte"
 
 # Version numbers of used software
-ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=5.3.2 \
+ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=5.13.1 \
     DOTNETCORE_RUNTIME_VERSION=5.0 \
-    JRE_VERSION=11
+    JRE_VERSION=17
 
 # Add Microsoft Debian apt-get feed 
 RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
