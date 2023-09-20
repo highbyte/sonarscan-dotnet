@@ -5,6 +5,8 @@ LABEL "com.github.actions.description"="Sonarscanner for .NET 7 with pull reques
 LABEL "com.github.actions.icon"="check-square"
 LABEL "com.github.actions.color"="blue"
 
+LABEL "org.opencontainers.image.source"="https://github.com/highbyte/sonarscan-dotnet"
+
 LABEL "repository"="https://github.com/highbyte/sonarscan-dotnet"
 LABEL "homepage"="https://github.com/highbyte"
 LABEL "maintainer"="Highbyte"
@@ -44,7 +46,6 @@ RUN apt-get -q -y autoremove \
     && apt-get -q clean -y \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-#ADD entrypoint.sh /entrypoint.sh
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
