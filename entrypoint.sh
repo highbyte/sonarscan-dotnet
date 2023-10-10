@@ -82,7 +82,7 @@ echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
 #-----------------------------------
 # Build Sonarscanner begin command
 #-----------------------------------
-sonar_begin_cmd="/dotnet-sonarscanner begin /k:\"${INPUT_SONARPROJECTKEY}\" /n:\"${INPUT_SONARPROJECTNAME}\" /d:sonar.login=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"${INPUT_SONARHOSTNAME}\""
+sonar_begin_cmd="/dotnet-sonarscanner begin /k:\"${INPUT_SONARPROJECTKEY}\" /n:\"${INPUT_SONARPROJECTNAME}\" /d:sonar.token=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"${INPUT_SONARHOSTNAME}\""
 if [ -n "$INPUT_SONARORGANIZATION" ]; then
     sonar_begin_cmd="$sonar_begin_cmd /o:\"${INPUT_SONARORGANIZATION}\""
 fi
@@ -109,7 +109,7 @@ fi
 #-----------------------------------
 # Build Sonarscanner end command
 #-----------------------------------
-sonar_end_cmd="/dotnet-sonarscanner end /d:sonar.login=\"${SONAR_TOKEN}\""
+sonar_end_cmd="/dotnet-sonarscanner end /d:sonar.token=\"${SONAR_TOKEN}\""
 
 #-----------------------------------
 # Build pre build command
