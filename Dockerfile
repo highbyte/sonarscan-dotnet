@@ -13,7 +13,7 @@ LABEL "maintainer"="Highbyte"
 
 # Version numbers of used software
 ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=5.13.1 \
-    DOTNETCORE_RUNTIME_VERSION=5.0 \
+    DOTNETCORE_RUNTIME_VERSION=6.0 \
     NODE_VERSION=20 \
     JRE_VERSION=17
 
