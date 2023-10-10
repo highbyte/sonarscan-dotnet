@@ -14,6 +14,7 @@ LABEL "maintainer"="Highbyte"
 # Version numbers of used software
 ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=5.13.1 \
     DOTNETCORE_RUNTIME_VERSION=5.0 \
+    NODE_VERSION=20 \
     JRE_VERSION=17
 
 # Add Microsoft Debian apt-get feed 
@@ -32,8 +33,12 @@ RUN apt-get update -y \
     && apt-get install --no-install-recommends -y aspnetcore-runtime-$DOTNETCORE_RUNTIME_VERSION
     
 # Install NodeJS
-RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - \
-    && apt-get install -y nodejs
+RUN apt-get install -y ca-certificates curl gnupg \
+    && mkdir -p /etc/apt/keyrings \
+    && -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update -y \
+    && apt-get install nodejs -y
 
 # Install Java Runtime for SonarScanner
 RUN apt-get install --no-install-recommends -y openjdk-$JRE_VERSION-jre
