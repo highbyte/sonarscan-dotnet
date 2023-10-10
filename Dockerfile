@@ -12,7 +12,7 @@ LABEL "homepage"="https://github.com/highbyte"
 LABEL "maintainer"="Highbyte"
 
 # Version numbers of used software
-ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=5.13.1 \
+ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=5.14 \
     DOTNETCORE_RUNTIME_VERSION=5.0 \
     NODE_VERSION=20 \
     JRE_VERSION=17
