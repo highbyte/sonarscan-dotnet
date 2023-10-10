@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0
+FROM mcr.microsoft.com/dotnet/sdk:8.0
 
 LABEL "com.github.actions.name"="sonarscan-dotnet"
-LABEL "com.github.actions.description"="Sonarscanner for .NET 7 with pull request decoration support."
+LABEL "com.github.actions.description"="Sonarscanner for .NET 8 with pull request decoration support."
 LABEL "com.github.actions.icon"="check-square"
 LABEL "com.github.actions.color"="blue"
 
