@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0.101
+FROM mcr.microsoft.com/dotnet/sdk:8.0.201
 
 LABEL "com.github.actions.name"="sonarscan-dotnet"
 LABEL "com.github.actions.description"="Sonarscanner for .NET 8 with pull request decoration support."
@@ -12,7 +12,7 @@ LABEL "homepage"="https://github.com/highbyte"
 LABEL "maintainer"="Highbyte"
 
 # Version numbers of used software
-ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=6.0 \
+ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=6.2 \
     DOTNETCORE_RUNTIME_VERSION=8.0 \
     NODE_VERSION=20 \
     JRE_VERSION=17
