@@ -3,7 +3,8 @@
 
 SonarScanner for .NET for use in Github Actions, with automatic pull request detection, analysis and decoration.
 
-The current version supports .NET 8
+The current version supports .NET 9
+- For .NET 8, use version [2.3.2](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.3.2)
 - For .NET 7, use version [2.2.6](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.2.6)
 - For .NET 6, use version [2.1.5](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.1.5)
 - For .NET 5, use version [2.0](https://github.com/marketplace/actions/sonarscan-dotnet?version=2.0)
@@ -16,8 +17,8 @@ The current version supports .NET 8
 ## Simple use with SonarCloud
 
 ``` yaml
-    - name: SonarScanner for .NET 8 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.3.2
+    - name: SonarScanner for .NET 9 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.4.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -35,8 +36,8 @@ The current version supports .NET 8
 Also includes test results.
 
 ``` yaml
-    - name: SonarScanner for .NET 8 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.3.2
+    - name: SonarScanner for .NET 9 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.4.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -58,8 +59,8 @@ Also includes test results.
 Also includes test results.
 
 ``` yaml
-    - name: SonarScanner for .NET 8 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.3.2
+    - name: SonarScanner for .NET 9 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.4.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -82,8 +83,8 @@ Also includes test results.
 ## Skip tests
 
 ``` yaml
-    - name: SonarScanner for .NET 8 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.3.2
+    - name: SonarScanner for .NET 9 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.4.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -102,8 +103,8 @@ Also includes test results.
 ## Use pre-build command to add a custom NuGet repository
 
 ``` yaml
-    - name: SonarScanner for .NET 8 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.3.2
+    - name: SonarScanner for .NET 9 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.4.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -124,8 +125,8 @@ Also includes test results.
 ## Use with self-hosted SonarQube
 
 ``` yaml
-    - name: SonarScanner for .NET 8 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.3.2
+    - name: SonarScanner for .NET 9 with pull request decoration support
+      uses: highbyte/sonarscan-dotnet@v2.4.0-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
