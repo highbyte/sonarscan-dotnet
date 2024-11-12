@@ -14,7 +14,7 @@ LABEL "maintainer"="Highbyte"
 # Version numbers of used software
 ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=9.0.1 \
     DOTNETCORE_RUNTIME_VERSION=8.0 \
-    NODE_VERSION=20 \
+    NODE_VERSION=22 \
     JRE_VERSION=17
 
 # Add Microsoft Debian apt-get feed 
