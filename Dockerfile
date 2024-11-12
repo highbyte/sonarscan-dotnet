@@ -41,7 +41,7 @@ RUN apt-get install -y ca-certificates curl gnupg \
     && apt-get install nodejs -y
 
 # Install Java Runtime for SonarScanner
-#RUN apt-get install --no-install-recommends -y openjdk-$JRE_VERSION-jre
+RUN apt-get install --no-install-recommends -y openjdk-$JRE_VERSION-jre
 
 # Install SonarScanner .NET global tool
 RUN dotnet tool install dotnet-sonarscanner --tool-path . --version $SONAR_SCANNER_DOTNET_TOOL_VERSION
