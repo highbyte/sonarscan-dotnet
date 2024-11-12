@@ -84,7 +84,7 @@ echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
 #-----------------------------------
 
 # Skip JRE provisioning in SonarScanner for MSBuild v7.0+. Instead use the JRE provided by the Docker image (which must be in the PATH).
-export SONAR_SCANNER_SKIP_JRE_PROVISIONING="true"
+#export SONAR_SCANNER_SKIP_JRE_PROVISIONING="true"
 
 sonar_begin_cmd="/dotnet-sonarscanner begin /k:\"${INPUT_SONARPROJECTKEY}\" /n:\"${INPUT_SONARPROJECTNAME}\" /d:sonar.token=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"${INPUT_SONARHOSTNAME}\""
 if [ -n "$INPUT_SONARORGANIZATION" ]; then
