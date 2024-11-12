@@ -14,8 +14,8 @@ LABEL "maintainer"="Highbyte"
 # Version numbers of used software
 ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=9.0.1 \
     DOTNETCORE_RUNTIME_VERSION=8.0 \
-    NODE_VERSION=20 \
-    JRE_VERSION=17
+    NODE_VERSION=20
+    #JRE_VERSION=17
 
 # Add Microsoft Debian apt-get feed 
 RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
@@ -41,7 +41,7 @@ RUN apt-get install -y ca-certificates curl gnupg \
     && apt-get install nodejs -y
 
 # Install Java Runtime for SonarScanner
-RUN apt-get install --no-install-recommends -y openjdk-$JRE_VERSION-jre
+#RUN apt-get install --no-install-recommends -y openjdk-$JRE_VERSION-jre
 
 # Install SonarScanner .NET global tool
 RUN dotnet tool install dotnet-sonarscanner --tool-path . --version $SONAR_SCANNER_DOTNET_TOOL_VERSION
