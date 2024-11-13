@@ -4,7 +4,7 @@
 SonarScanner for .NET for use in Github Actions, with automatic pull request detection, analysis and decoration.
 
 > [!NOTE]  
-> This version version supports `.NET 9`.
+> This version supports `.NET 9`.
 
 | Other .NET versions | GitHub Action version |
 |------------------|-------------------------------------------------------------------------------------|
