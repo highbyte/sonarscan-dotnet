@@ -82,6 +82,7 @@ echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
 #-----------------------------------
 # Build Sonarscanner begin command
 #-----------------------------------
+
 sonar_begin_cmd="/dotnet-sonarscanner begin /k:\"${INPUT_SONARPROJECTKEY}\" /n:\"${INPUT_SONARPROJECTNAME}\" /d:sonar.token=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"${INPUT_SONARHOSTNAME}\""
 if [ -n "$INPUT_SONARORGANIZATION" ]; then
     sonar_begin_cmd="$sonar_begin_cmd /o:\"${INPUT_SONARORGANIZATION}\""
@@ -105,6 +106,9 @@ if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
     sonar_begin_cmd="$sonar_begin_cmd /d:sonar.pullrequest.key=$PR_NUMBER /d:sonar.pullrequest.branch=$GITHUB_HEAD_REF /d:sonar.pullrequest.base=$GITHUB_BASE_REF /d:sonar.pullrequest.github.repository=$GITHUB_REPOSITORY /d:sonar.pullrequest.provider=github"
 
 fi
+
+#Skip JRE provisioning in SonarScanner for MSBuild v7.0+. Instead use the JRE provided by the Docker image (which must be in the PATH).
+sonar_begin_cmd="$sonar_begin_cmd /d:sonar.scanner.skipJreProvisioning=true"
 
 #-----------------------------------
 # Build Sonarscanner end command
