@@ -18,7 +18,7 @@ The current version supports .NET 9
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.0-beta6
+      uses: highbyte/sonarscan-dotnet@v2.4.0
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -37,7 +37,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.0-beta6
+      uses: highbyte/sonarscan-dotnet@v2.4.0
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -60,7 +60,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.0-beta6
+      uses: highbyte/sonarscan-dotnet@v2.4.0
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -84,7 +84,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.0-beta6
+      uses: highbyte/sonarscan-dotnet@v2.4.0
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -104,7 +104,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.0-beta6
+      uses: highbyte/sonarscan-dotnet@v2.4.0
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -126,7 +126,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.0-beta6
+      uses: highbyte/sonarscan-dotnet@v2.4.0
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -192,7 +192,7 @@ If the SonarQube/SonarCloud dashboard shows a warning message in the top right (
 it can be fixed by modifying the Git checkout action fetch-depth parameter: 
 
 ``` yaml
-- uses: actions/checkout@v2
+- uses: actions/checkout@v4
       with:
         fetch-depth: '0'
 ```
