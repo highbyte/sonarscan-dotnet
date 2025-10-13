@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0.403
+FROM mcr.microsoft.com/dotnet/sdk:8.0.414
 
 LABEL "com.github.actions.name"="sonarscan-dotnet"
 LABEL "com.github.actions.description"="SonarScanner for .NET 8 with pull request decoration support."
@@ -12,13 +12,13 @@ LABEL "homepage"="https://github.com/highbyte"
 LABEL "maintainer"="Highbyte"
 
 # Version numbers of used software
-ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=9.0.1 \
+ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=10.4.1 \
     DOTNETCORE_RUNTIME_VERSION=8.0 \
     NODE_VERSION=22 \
     JRE_VERSION=17
 
 # Add Microsoft Debian apt-get feed 
-RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb
 
 # Fix JRE Install https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
