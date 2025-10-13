@@ -34,7 +34,7 @@ inputs:
 
 runs:
   using: "docker"
-  image: "docker://ghcr.io/highbyte/sonarscan-dotnet:v2.4.3"
+  image: "docker://ghcr.io/highbyte/sonarscan-dotnet:v2.4.3-beta"
 
 branding:
   icon: 'check-square'
