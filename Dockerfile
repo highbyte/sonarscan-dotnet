@@ -53,4 +53,8 @@ RUN apt-get -q -y autoremove \
 
 COPY entrypoint.sh /entrypoint.sh
 
+# Fix potential Windows line endings issue and ensure script is executable
+RUN chmod +x /entrypoint.sh && \
+    sed -i 's/\r$//' /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
