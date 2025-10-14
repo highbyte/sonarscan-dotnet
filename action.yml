@@ -1,5 +1,5 @@
 name: "sonarscan-dotnet"
-description: "SonarScanner for .NET 9 with pull request decoration support."
+description: "SonarScanner for .NET 10 with pull request decoration support."
 author: "Highbyte"
 
 inputs:
@@ -34,7 +34,7 @@ inputs:
 
 runs:
   using: "docker"
-  image: "docker://ghcr.io/highbyte/sonarscan-dotnet:v2.4.2"
+  image: "docker://ghcr.io/highbyte/sonarscan-dotnet:v2.5.0-beta"
 
 branding:
   icon: 'check-square'
