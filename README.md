@@ -4,7 +4,7 @@
 SonarScanner for .NET for use in Github Actions, with automatic pull request detection, analysis and decoration.
 
 This version supports .NET 8
-- For .NET 9, use version [2.4.0](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.4.0)
+- For .NET 9, use version [2.4.3](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.4.3) or later `2.4` version
 - For .NET 7, use version [2.2.6](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.2.6)
 - For .NET 6, use version [2.1.5](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.1.5)
 - For .NET 5, use version [2.0](https://github.com/marketplace/actions/sonarscan-dotnet?version=2.0)
