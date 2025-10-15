@@ -8,7 +8,7 @@ SonarScanner for .NET for use in Github Actions, with automatic pull request det
 
 | Other .NET versions | GitHub Action version |
 |------------------|-------------------------------------------------------------------------------------|
-| `.NET 8`           | [`2.3.3`](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.3.3) or later `2.3` version |
+| `.NET 8`           | [`2.3.4`](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.3.4) or later `2.3` version |
 | `.NET 7`           | [`2.2.6`](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.2.6) |
 | `.NET 6`           | [`2.1.5`](https://github.com/marketplace/actions/sonarscan-dotnet?version=v2.1.5) |
 | `.NET 5`           | [`2.0`](https://github.com/marketplace/actions/sonarscan-dotnet?version=2.0) |
@@ -22,7 +22,7 @@ SonarScanner for .NET for use in Github Actions, with automatic pull request det
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.2
+      uses: highbyte/sonarscan-dotnet@v2.4.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -41,7 +41,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.2
+      uses: highbyte/sonarscan-dotnet@v2.4.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -64,7 +64,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.2
+      uses: highbyte/sonarscan-dotnet@v2.4.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -88,7 +88,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.2
+      uses: highbyte/sonarscan-dotnet@v2.4.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -108,7 +108,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.2
+      uses: highbyte/sonarscan-dotnet@v2.4.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -130,7 +130,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 9 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.4.2
+      uses: highbyte/sonarscan-dotnet@v2.4.3
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
