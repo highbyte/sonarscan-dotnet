@@ -5,11 +5,11 @@ LABEL "com.github.actions.description"="SonarScanner for .NET 10 with pull reque
 LABEL "com.github.actions.icon"="check-square"
 LABEL "com.github.actions.color"="blue"
 
-LABEL "org.opencontainers.image.source"="https://github.com/highbyte/sonarscan-dotnet"
+LABEL "org.opencontainers.image.source"="https://github.com/dssldavidmorgan/sonarscan-dotnet"
 
-LABEL "repository"="https://github.com/highbyte/sonarscan-dotnet"
-LABEL "homepage"="https://github.com/highbyte"
-LABEL "maintainer"="Highbyte"
+LABEL "repository"="https://github.com/dssldavidmorgan/sonarscan-dotnet"
+LABEL "homepage"="https://github.com/dssldavidmorgan"
+LABEL "maintainer"="dssldavidmorgan"
 
 # Version numbers of used software
 ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=11.0.0 \
