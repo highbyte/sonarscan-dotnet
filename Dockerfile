@@ -15,7 +15,7 @@ LABEL "maintainer"="Highbyte"
 ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=11.0.0 \
     DOTNETCORE_RUNTIME_VERSION=9.0 \
     NODE_VERSION=22 \
-    JRE_VERSION=17
+    JRE_VERSION=21
 
 # Add Microsoft Debian apt-get feed 
 RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
