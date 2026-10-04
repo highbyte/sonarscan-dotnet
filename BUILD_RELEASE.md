@@ -64,7 +64,7 @@ gh workflow run verify-sample.yml --repo highbyte/sonarscan-dotnet \
   --ref "$SCANNER_BRANCH" -f "action_ref=$SCANNER_BRANCH"
 ```
 
-The workflow must be available on the default branch before manual dispatch. Watch the run for the intended commit/ref, confirm the image/digest and tests, and wait for the gate. The existing action itself does not wait for SonarCloud; the sample verification workflow does.
+Push the branch containing the workflow once to register it with GitHub before the first CLI dispatch. Watch the run for the intended commit/ref, confirm the image/digest and tests, and wait for the gate. The existing action itself does not wait for SonarCloud; the sample verification workflow does.
 
 ## Publish the action release
 

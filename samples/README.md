@@ -49,7 +49,7 @@ The script runs the image's real entrypoint, masks its token-bearing echoes, dis
 
 [Docker Image build](../.github/workflows/docker-image.yml) builds the candidate image and runs this sample without SonarCloud, on pushes and PRs. [Verify scanner action](../.github/workflows/verify-sample.yml) uses the published image referenced by the selected action's `action.yml`, then waits for the SonarCloud gate. The latter skips automatic runs until the project variables are configured; a skipped run is not scan verification.
 
-Pushes verify the action at the workflow commit. Once the verification workflow is available on the repository's default branch, dispatch it from the development branch with an explicit action ref:
+Pushes verify the action at the workflow commit and register the verification workflow with GitHub. After that initial push, dispatch it from the development branch with an explicit action ref:
 
 ```sh
 # Candidate action branch; replace the branch if needed.
