@@ -132,11 +132,21 @@ Images and cache remain available for subsequent builds.
 
 ## Optional agent skill
 
-[release-sonarscan-dotnet](skills/release-sonarscan-dotnet/SKILL.md) guides the release stages using this document and the sample scripts. To install in Codex, copy the folder to the local skills directory (inspect an existing installation before replacing it):
+[release-sonarscan-dotnet](skills/release-sonarscan-dotnet/SKILL.md) guides the release stages using this document and the sample scripts. The repository includes regular files in both discovery locations, so no installation or symlink support is needed when working in this checkout:
+
+| Agent | Repository skill | Invocation |
+| --- | --- | --- |
+| Codex | [`.agents/skills/release-sonarscan-dotnet/SKILL.md`](.agents/skills/release-sonarscan-dotnet/SKILL.md) | `$release-sonarscan-dotnet` |
+| Claude Code | [`.claude/skills/release-sonarscan-dotnet/SKILL.md`](.claude/skills/release-sonarscan-dotnet/SKILL.md) | `/release-sonarscan-dotnet` |
+
+Include beta or stable and the intended version in the request. Detailed procedures and scripts remain shared in this repository.
+
+Maintain `skills/release-sonarscan-dotnet/` as the source. After changing its instructions or Codex metadata, synchronize the discovery copies:
 
 ```sh
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-cp -R skills/release-sonarscan-dotnet "${CODEX_HOME:-$HOME/.codex}/skills/"
+cp skills/release-sonarscan-dotnet/SKILL.md .agents/skills/release-sonarscan-dotnet/SKILL.md
+cp skills/release-sonarscan-dotnet/SKILL.md .claude/skills/release-sonarscan-dotnet/SKILL.md
+cp skills/release-sonarscan-dotnet/agents/openai.yaml .agents/skills/release-sonarscan-dotnet/agents/openai.yaml
 ```
 
-Invoke `$release-sonarscan-dotnet` with beta or stable and the intended version. Other agents supporting `SKILL.md` can install the same source folder in their own skill location.
+The Docker build workflow checks that these files match before building the image. For use outside this checkout, install the source folder in the agent's user skills directory (`~/.agents/skills/` for Codex or `~/.claude/skills/` for Claude Code), inspecting an existing installation before replacing it. Other agents supporting `SKILL.md` can install the same source folder in their own skill location.
