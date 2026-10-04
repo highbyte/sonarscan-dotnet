@@ -54,7 +54,7 @@ jobs:
           dotnetPreBuildCmd: dotnet restore samples/ScanSample.slnx --locked-mode
           dotnetBuildArguments: samples/ScanSample.slnx --no-restore
           dotnetTestArguments: samples/ScanSample.slnx --no-build --logger trx --results-directory samples/.artifacts/github --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-          sonarBeginArguments: /d:sonar.scanner.scanAll=false /d:sonar.projectBaseDir=samples /d:sonar.branch.name="${{ github.ref_name }}" /d:sonar.cs.opencover.reportsPaths="samples/.artifacts/github/**/coverage.opencover.xml" /d:sonar.cs.vstest.reportsPaths="samples/.artifacts/github/*.trx"
+          sonarBeginArguments: /d:sonar.scanner.scanAll=false /d:sonar.projectBaseDir=/github/workspace/samples /d:sonar.branch.name="${{ github.ref_name }}" /d:sonar.cs.opencover.reportsPaths="samples/.artifacts/github/**/coverage.opencover.xml" /d:sonar.cs.vstest.reportsPaths="samples/.artifacts/github/*.trx"
       - name: Wait for analysis and require its quality gate
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
