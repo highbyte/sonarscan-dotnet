@@ -46,10 +46,16 @@ def run(args):
     command = docker + ["run", "--rm", "-i", "--platform", args.platform, "--log-driver", "none",
                         "--workdir", "/github/workspace", "--mount",
                         "type=bind,src=" + str(REPOSITORY) + ",dst=/github/workspace"]
-    # Git worktrees point outside their checkout. Make their common metadata visible read-only.
+    # Worktree metadata uses host paths, which are not valid inside Linux containers on Windows.
     common_git = Path(command_output(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"]))
     if common_git != REPOSITORY / ".git":
-        command += ["--mount", "type=bind,src=" + str(common_git) + ",dst=" + str(common_git) + ",readonly"]
+        git_directory = Path(command_output(["git", "rev-parse", "--absolute-git-dir"]))
+        git_pointer = SAMPLE_DIRECTORY / results / "gitdir"
+        git_pointer.parent.mkdir(parents=True, exist_ok=True)
+        with git_pointer.open("w", encoding="utf-8", newline="\n") as pointer:
+            pointer.write("gitdir: /git-metadata/" + git_directory.relative_to(common_git).as_posix() + "\n")
+        command += ["--mount", "type=bind,src=" + str(common_git) + ",dst=/git-metadata,readonly",
+                    "--mount", "type=bind,src=" + str(git_pointer) + ",dst=/github/workspace/.git,readonly"]
 
     if args.build_only:
         script = '''set -euo pipefail
@@ -94,6 +100,8 @@ source /entrypoint.sh
     process = subprocess.Popen(command, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT, text=True)
     try:
+        # Keep Bash input as LF even when Python is running natively on Windows.
+        process.stdin.reconfigure(newline="\n")
         process.stdin.write(script)
         process.stdin.close()
         for line in process.stdout:

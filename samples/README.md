@@ -14,6 +14,25 @@ For the separate macOS daemon, add `--context colima-rosetta-build`, or select i
 
 Each run writes fresh TRX and OpenCover reports into ignored `samples/.artifacts/`. The script verifies successful tests and coverage generation. Build outputs and scanner working files are also ignored; do not commit generated artifacts.
 
+## Windows (PowerShell)
+
+Use Windows PowerShell 5.1 or PowerShell 7 with Python 3, Git, and Docker Desktop configured for Linux containers. The launcher looks for `py -3`, then `python3`, then `python` on `PATH`. The .NET SDK runs inside the image; no host SDK or Git Bash is required.
+
+From the repository root:
+
+```powershell
+docker pull --platform linux/amd64 ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta
+.\samples\verify-image.ps1 --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta --build-only
+```
+
+The PowerShell launcher accepts the same options as the Bash launcher and returns the verifier's exit code. Use `--help` to list options. After configuring the SonarCloud project as described below and supplying `SONAR_TOKEN` in the process environment through your approved credential mechanism, run:
+
+```powershell
+.\samples\verify-image.ps1 --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta `
+  --project-key your-org_sonarscan-dotnet-sample --organization your-org `
+  --branch sample-verification
+```
+
 ## SonarCloud setup
 
 Create a separate SonarCloud project for this sample, with a project key such as `your-org_sonarscan-dotnet-sample`. Use manual CI-based analysis and assign your organization's quality gate to the project. Analyze the project's main branch once before relying on comparisons against it. Keep this project separate from any analysis of the action's own implementation. Verification requires an `OK` gate; `NONE` indicates an unevaluated gate and fails verification.

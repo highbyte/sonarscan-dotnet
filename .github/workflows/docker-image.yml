@@ -23,3 +23,22 @@ jobs:
         run: docker build --platform linux/amd64 --tag sonarscan-dotnet:test .
       - name: Build, test, and collect sample coverage
         run: samples/verify-image.sh --image sonarscan-dotnet:test --build-only
+
+  windows-launcher:
+    name: Windows PowerShell launcher
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Show verifier options through PowerShell
+        shell: pwsh
+        run: .\samples\verify-image.ps1 --help
+      - name: Show verifier options through Windows PowerShell 5.1
+        shell: powershell
+        run: .\samples\verify-image.ps1 --help
+      - name: Verify failure exit codes are preserved
+        shell: pwsh
+        run: |
+          & .\samples\verify-image.ps1 --image 'unused image with spaces' --build-only --timeout 0
+          if ($LASTEXITCODE -ne 1) { throw 'Expected verifier validation to fail with exit code 1.' }
+          exit 0
