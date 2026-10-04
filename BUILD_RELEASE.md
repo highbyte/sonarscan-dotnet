@@ -132,7 +132,7 @@ Images and cache remain available for subsequent builds.
 
 ## Optional agent skill
 
-[release-sonarscan-dotnet](skills/release-sonarscan-dotnet/SKILL.md) guides the release stages using this document and the sample scripts. The repository includes regular files in both discovery locations, so no installation or symlink support is needed when working in this checkout:
+[release-sonarscan-dotnet](.agents/skills/release-sonarscan-dotnet/SKILL.md) guides the release stages using this document and the sample scripts. The repository includes regular files in both discovery locations, so no installation or symlink support is needed when working in this checkout:
 
 | Agent | Repository skill | Invocation |
 | --- | --- | --- |
@@ -141,12 +141,12 @@ Images and cache remain available for subsequent builds.
 
 Include beta or stable and the intended version in the request. Detailed procedures and scripts remain shared in this repository.
 
-Maintain `skills/release-sonarscan-dotnet/` as the source. After changing its instructions or Codex metadata, synchronize the discovery copies:
+Edit `.agents/skills/release-sonarscan-dotnet/SKILL.md`, then copy the instructions to the Claude Code location:
 
 ```sh
-cp skills/release-sonarscan-dotnet/SKILL.md .agents/skills/release-sonarscan-dotnet/SKILL.md
-cp skills/release-sonarscan-dotnet/SKILL.md .claude/skills/release-sonarscan-dotnet/SKILL.md
-cp skills/release-sonarscan-dotnet/agents/openai.yaml .agents/skills/release-sonarscan-dotnet/agents/openai.yaml
+cp .agents/skills/release-sonarscan-dotnet/SKILL.md .claude/skills/release-sonarscan-dotnet/SKILL.md
 ```
 
-The Docker build workflow checks that these files match before building the image. For use outside this checkout, install the source folder in the agent's user skills directory (`~/.agents/skills/` for Codex or `~/.claude/skills/` for Claude Code), inspecting an existing installation before replacing it. Other agents supporting `SKILL.md` can install the same source folder in their own skill location.
+Codex metadata stays in `.agents/skills/release-sonarscan-dotnet/agents/openai.yaml`; it does not need a Claude Code copy. The Docker build workflow checks that the two `SKILL.md` files match before building the image. Synchronization is manual; CI fails if the copies differ.
+
+For use outside this checkout, install the matching repository skill folder in the agent's user skills directory (`~/.agents/skills/` for Codex or `~/.claude/skills/` for Claude Code), inspecting an existing installation before replacing it. Other agents supporting `SKILL.md` can install the instructions in their own skill location.
