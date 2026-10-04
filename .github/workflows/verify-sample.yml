@@ -1,0 +1,61 @@
+name: Verify scanner action
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      action_ref:
+        description: 'Action branch, tag, or commit (empty uses this workflow commit)'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: github.event_name == 'workflow_dispatch' || (vars.SONAR_SAMPLE_PROJECT_KEY != '' && vars.SONAR_ORGANIZATION != '')
+    name: Sample SonarCloud analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SONAR_PROJECT_KEY: ${{ vars.SONAR_SAMPLE_PROJECT_KEY }}
+      SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check SonarCloud configuration
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          test -n "$SONAR_PROJECT_KEY" || { echo 'Set SONAR_SAMPLE_PROJECT_KEY repository variable.'; exit 1; }
+          test -n "$SONAR_ORGANIZATION" || { echo 'Set SONAR_ORGANIZATION repository variable.'; exit 1; }
+          test -n "$SONAR_TOKEN" || { echo 'Set SONAR_TOKEN repository secret.'; exit 1; }
+          [[ "$SONAR_PROJECT_KEY" =~ ^[a-zA-Z0-9_.:-]+$ ]] || { echo 'Unsupported project key.'; exit 1; }
+          [[ "$SONAR_ORGANIZATION" =~ ^[a-zA-Z0-9_.-]+$ ]] || { echo 'Unsupported organization key.'; exit 1; }
+          [[ "$GITHUB_REF_NAME" =~ ^[a-zA-Z0-9_./-]+$ ]] || { echo 'Unsupported branch name.'; exit 1; }
+      - name: Check out the action being verified
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: highbyte/sonarscan-dotnet
+          ref: ${{ inputs.action_ref || github.sha }}
+          path: .verification-action
+          persist-credentials: false
+      - name: Scan the sample with the selected action
+        uses: ./.verification-action
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          sonarProjectKey: ${{ env.SONAR_PROJECT_KEY }}
+          sonarProjectName: SonarScanner .NET sample
+          sonarOrganization: ${{ env.SONAR_ORGANIZATION }}
+          dotnetPreBuildCmd: dotnet restore samples/ScanSample.slnx --locked-mode
+          dotnetBuildArguments: samples/ScanSample.slnx --no-restore
+          dotnetTestArguments: samples/ScanSample.slnx --no-build --logger trx --results-directory samples/.artifacts/github --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          sonarBeginArguments: /d:sonar.scanner.scanAll=false /d:sonar.projectBaseDir=samples /d:sonar.branch.name="${{ github.ref_name }}" /d:sonar.cs.opencover.reportsPaths="samples/.artifacts/github/**/coverage.opencover.xml" /d:sonar.cs.vstest.reportsPaths="samples/.artifacts/github/*.trx"
+      - name: Wait for analysis and require its quality gate
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: python3 samples/check_analysis.py --task-file .sonarqube/out/.sonar/report-task.txt --branch "$GITHUB_REF_NAME"

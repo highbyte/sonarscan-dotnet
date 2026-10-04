@@ -1,0 +1,7 @@
+.git
+**/bin
+**/obj
+**/.sonarqube
+samples/.artifacts
+.verification-action
+**/__pycache__

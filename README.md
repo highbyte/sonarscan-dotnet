@@ -184,6 +184,10 @@ inputs:
     required: false
 ```
 
+# Building and verifying releases
+
+See [BUILD_RELEASE.md](BUILD_RELEASE.md) for registry authentication, beta/stable releases, and macOS Docker setup. The [bundled .NET sample](samples/README.md) verifies local images and action branches or release tags with tests, coverage, and SonarCloud.
+
 # Troubleshooting
 ## Build error "ERROR: Could not find a default branch to fall back on."
 If this error occurs in the build log, you can try this:

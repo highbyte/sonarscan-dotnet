@@ -2,17 +2,19 @@ name: Docker Image build
 
 on:
   push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
+
+permissions:
+  contents: read
 
 jobs:
-
   build:
-
+    name: Build image and test sample
     runs-on: ubuntu-latest
-
+    timeout-minutes: 20
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag highbyte/sonarscan-dotnet:$(date +%s)
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Build the Docker image
+        run: docker build --platform linux/amd64 --tag sonarscan-dotnet:test .
+      - name: Build, test, and collect sample coverage
+        run: samples/verify-image.sh --image sonarscan-dotnet:test --build-only
