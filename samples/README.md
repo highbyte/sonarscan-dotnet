@@ -2,7 +2,7 @@
 
 `ScanSample.slnx` contains a small temperature-conversion library and five tests covering successful conversions, the absolute-zero boundary, and invalid input. The target framework in `Directory.Build.props` follows the action's SDK. Package versions and lock files are pinned, and high/critical transitive NuGet advisories fail restore.
 
-Run commands from the repository root. Requirements: Docker, Git, Python 3, and an image already built or pulled into the selected Docker daemon. GitHub verification uses Linux AMD64; on Apple Silicon use the Colima/Rosetta setup in [BUILD_RELEASE.md](../BUILD_RELEASE.md#macos-with-apple-silicon).
+Run commands from the repository root. Requirements: Docker, Git, Python 3, and an image already built or pulled into the selected Docker daemon. GitHub verification uses Linux AMD64. Follow the [host setup and shared image build commands](../BUILD_RELEASE.md#set-up-amd64-container-execution) for native AMD64 or Apple Silicon with Colima/Rosetta. Ubuntu ARM64/QEMU is an experimental build path; Microsoft does not support running .NET under QEMU, and the verifier may crash during restore even when the image builds successfully.
 
 ## Local build, tests, and coverage
 
@@ -10,7 +10,7 @@ Run commands from the repository root. Requirements: Docker, Git, Python 3, and 
 samples/verify-image.sh --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta --build-only
 ```
 
-For the separate macOS daemon, add `--context colima-rosetta-build`, or select it through `DOCKER_CONTEXT`. Use `--help` for other options. `--build-only` requires no credentials and performs no SonarCloud upload.
+The verifier uses the daemon selected during host setup, including an exported `DOCKER_CONTEXT` on macOS. Use `--help` for other options. `--build-only` requires no credentials and performs no SonarCloud upload.
 
 Each run writes fresh TRX and OpenCover reports into ignored `samples/.artifacts/`. The script verifies successful tests and coverage generation. Build outputs and scanner working files are also ignored; do not commit generated artifacts.
 

@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0.12 AS scanner-runtime
 
-FROM mcr.microsoft.com/dotnet/sdk:11.0.100-rc.1
+FROM mcr.microsoft.com/dotnet/sdk:11.0.100-rc.2
 
 LABEL "com.github.actions.name"="sonarscan-dotnet"
 LABEL "com.github.actions.description"="SonarScanner for .NET 11 with pull request decoration support."

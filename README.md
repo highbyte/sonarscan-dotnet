@@ -4,7 +4,7 @@
 SonarScanner for .NET for use in Github Actions, with automatic pull request detection, analysis and decoration.
 
 > [!NOTE]  
-> This prerelease supports `.NET 11 RC1`.
+> This prerelease supports `.NET 11 RC2`.
 
 | Other .NET versions | GitHub Action version |
 |------------------|-------------------------------------------------------------------------------------|

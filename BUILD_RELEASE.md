@@ -26,9 +26,74 @@ IMAGE="ghcr.io/highbyte/sonarscan-dotnet:$RELEASE_VERSION"
 
 Update the Dockerfile, sample framework/dependencies and lock files, `action.yml` image tag, and current README/sample usage examples as needed. Preserve historical compatibility entries. Keep preview/RC support explicit when applicable.
 
+## Set up AMD64 container execution
+
+The release image targets `linux/amd64`, matching the GitHub-hosted Linux runner. Choose a supported execution setup for your host, then use the same build, verification, and publish commands below. Ubuntu ARM64/QEMU is described separately as an experimental build path, not a supported .NET verification environment. Run shell examples in a Bash-compatible terminal from the scanner checkout. Requirements: Docker CLI with Buildx, a running Linux Docker daemon, Git, and Python 3.
+
+### Native AMD64 Linux or Windows with Docker Desktop
+
+Use the existing Docker daemon; on Windows, select Linux containers. No CPU emulation is needed on an AMD64 host. For native PowerShell verification, see the [sample launcher instructions](samples/README.md#windows-powershell).
+
+### Ubuntu ARM64 with Docker Engine
+
+Use a native AMD64 Docker host or GitHub-hosted AMD64 runner for release verification. The local ARM64 Docker Engine can still build and test ARM64 images. Lima is not required.
+
+QEMU can enable AMD64 container execution on the existing ARM64 engine, but [Microsoft does not support running .NET under QEMU](https://github.com/dotnet/core/blob/main/release-notes/11.0/supported-os.md#notes). The image build and `dotnet --info` may succeed while `dotnet restore` or tests crash. A successful emulated build is not release verification.
+
+For an experimental AMD64 build attempt, register QEMU's AMD64 emulator with the Ubuntu host's `binfmt_misc` handlers, following [Docker's emulation setup](https://docs.docker.com/build/building/multi-platform/#install-qemu-manually):
+
+```sh
+docker run --privileged --rm tonistiigi/binfmt --install amd64
+```
+
+This privileged setup changes the Docker host's executable-format handlers; obtain approval before an agent runs it. It installs emulation support, not another Docker engine. Registration may need to be repeated after the host reboots unless the host restores it automatically. If Docker runs in an Ubuntu VM, the change applies to that VM.
+
+QEMU can be slower than native execution. If the sample verifier fails silently after printing the image architecture, try `dotnet restore` directly to reveal runtime crashes. An `AccessViolationException` or `qemu_MSBuild_*.core` dump indicates a runtime crash, not a failing sample assertion. Use native AMD64 execution for verification; the macOS Rosetta setup below is another option when an Apple Silicon machine is available.
+
+### macOS with Apple Silicon
+
+Use a separate Colima/Rosetta profile for AMD64 builds. Requirements: macOS 13+, Colima, and Docker CLI with Buildx. Rosetta avoids the .NET 11 RC1 crash seen under QEMU during scanner installation.
+
+Install Rosetta once if needed:
+
+```sh
+softwareupdate --install-rosetta
+```
+
+In a separate terminal:
+
+```sh
+colima start --profile rosetta-build \
+  --vm-type vz --arch aarch64 --vz-rosetta \
+  --activate=false --ssh-config=false \
+  --cpu 4 --memory 4 --disk 20
+export DOCKER_CONTEXT=colima-rosetta-build
+```
+
+The VM remains ARM64; Rosetta translates AMD64 commands. The context override applies only to this terminal and preserves the default context. Keep it set for every shared command below so login, build, verification, and push use the same daemon. The sample verifier inherits `DOCKER_CONTEXT`; no extra `--context` argument is needed.
+
+When finished with the release workflow, optionally stop this profile and clear the override:
+
+```sh
+colima stop --profile rosetta-build
+unset DOCKER_CONTEXT
+```
+
+Images and cache remain available for subsequent builds.
+
+### Check AMD64 execution on the selected daemon
+
+After host setup, run:
+
+```sh
+docker run --rm --platform linux/amd64 alpine uname -m
+```
+
+Expected output: `x86_64`. An `exec format error` means AMD64 execution is unavailable on the selected daemon; fix host setup before building the release image.
+
 ## Authenticate and build
 
-For Apple Silicon, complete the [Colima setup](#macos-with-apple-silicon) below first. Use the same daemon and Docker CLI configuration for login, build, verification, and push.
+The following commands are shared by the supported host setups. They can also be used for an experimental QEMU build, subject to the limitation above. Use the same daemon and Docker CLI configuration for login, build, verification, and push.
 
 Create a [GitHub personal access token (classic)](https://github.com/settings/tokens/new?scopes=write:packages) with `write:packages`, following [GHCR authentication instructions](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry). Then run:
 
@@ -39,12 +104,12 @@ docker login ghcr.io --username highbyte
 Paste the token at the hidden `Password:` prompt. Automated login should use `--password-stdin`; do not put credentials in arguments or committed files.
 
 ```sh
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
-docker build -t "$IMAGE" .
+docker build --platform linux/amd64 -t "$IMAGE" .
+docker image inspect "$IMAGE" --format '{{.Os}}/{{.Architecture}}'
 samples/verify-image.sh --image "$IMAGE" --build-only
 ```
 
-This validates the image's AMD64 architecture, sample build/tests, and fresh coverage. Then perform the [authenticated sample scan](samples/README.md#sonarcloud-setup) against the separate sample project. Require successful analysis processing, coverage import, and quality gate before proceeding. Resolve relevant warnings/advisories; report unresolved findings explicitly.
+The inspection must report `linux/amd64`. The verifier checks that architecture, builds the sample, runs its tests, and checks fresh coverage reports. `--build-only` needs no SonarCloud credential and performs no analysis upload. Then perform the [authenticated sample scan](samples/README.md#sonarcloud-setup) against the separate sample project. Require successful analysis processing, coverage import, and quality gate before proceeding. Resolve relevant warnings/advisories; report unresolved findings explicitly.
 
 ## Publish the image and test the action branch
 
@@ -97,38 +162,6 @@ gh run list --repo highbyte/sonarscan-dotnet --workflow verify-sample.yml --limi
 ```
 
 Watch the new run with `gh run watch RUN_ID --repo highbyte/sonarscan-dotnet --exit-status`. Verify tag resolution, image digest, build/tests, imported coverage, server processing, and quality gate. A branch test alone does not verify the release tag. Report the commit, tag/digest/architecture, run URL, and results; do not automatically merge or clean up branches/worktrees.
-
-## macOS with Apple Silicon
-
-Use a separate Colima/Rosetta profile for AMD64 builds. Requirements: macOS 13+, Colima, and Docker CLI with Buildx. Rosetta avoids the .NET 11 RC1 crash seen under QEMU during scanner installation.
-
-Install Rosetta once if needed:
-
-```sh
-softwareupdate --install-rosetta
-```
-
-In a separate terminal:
-
-```sh
-colima start --profile rosetta-build \
-  --vm-type vz --arch aarch64 --vz-rosetta \
-  --activate=false --ssh-config=false \
-  --cpu 4 --memory 4 --disk 20
-export DOCKER_CONTEXT=colima-rosetta-build
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
-```
-
-The VM remains ARM64; Rosetta translates AMD64 commands. The exports apply only to this terminal and preserve the default context. Run the commands above unchanged. You can also select this daemon using `docker --context colima-rosetta-build ...` or the sample script's `--context` option.
-
-When finished, optionally stop this profile and clear the overrides:
-
-```sh
-colima stop --profile rosetta-build
-unset DOCKER_CONTEXT DOCKER_DEFAULT_PLATFORM
-```
-
-Images and cache remain available for subsequent builds.
 
 ## Optional agent skill
 
