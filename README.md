@@ -24,7 +24,7 @@ SonarScanner for .NET for use in Github Actions, with automatic pull request det
 
 ``` yaml
     - name: SonarScanner for .NET 11 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.6.0-beta
+      uses: highbyte/sonarscan-dotnet@v2.6.0-beta2
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -43,7 +43,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 11 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.6.0-beta
+      uses: highbyte/sonarscan-dotnet@v2.6.0-beta2
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -66,7 +66,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 11 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.6.0-beta
+      uses: highbyte/sonarscan-dotnet@v2.6.0-beta2
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -90,7 +90,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 11 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.6.0-beta
+      uses: highbyte/sonarscan-dotnet@v2.6.0-beta2
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -110,7 +110,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 11 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.6.0-beta
+      uses: highbyte/sonarscan-dotnet@v2.6.0-beta2
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
@@ -132,7 +132,7 @@ Also includes test results.
 
 ``` yaml
     - name: SonarScanner for .NET 11 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@v2.6.0-beta
+      uses: highbyte/sonarscan-dotnet@v2.6.0-beta2
       with:
         # The key of the SonarQube project
         sonarProjectKey: your_projectkey
