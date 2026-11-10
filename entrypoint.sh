@@ -1,4 +1,5 @@
 #!/bin/bash
+set +x
 set -o pipefail
 set -eu
 
@@ -15,6 +16,23 @@ if [ -z "$SONAR_TOKEN" ]; then
     echo "Environment parameter SONAR_TOKEN is required"
     exit 1
 fi
+
+# The scanner reads this JSON environment variable in both begin and end steps.
+# Keep authentication out of command arguments, echoed commands, and settings files.
+SONARQUBE_SCANNER_PARAMS="$(node -e '
+  try {
+    const properties = JSON.parse(process.env.SONARQUBE_SCANNER_PARAMS || "{}");
+    if (properties === null || Array.isArray(properties) || typeof properties !== "object") {
+      throw new Error();
+    }
+    properties["sonar.token"] = process.env.SONAR_TOKEN;
+    process.stdout.write(JSON.stringify(properties));
+  } catch {
+    console.error("SONARQUBE_SCANNER_PARAMS must contain a JSON object.");
+    process.exit(1);
+  }
+')"
+export SONARQUBE_SCANNER_PARAMS
 
 # List Environment variables that's set by Github Action input parameters (defined by user)
 echo "Github Action input parameters"
@@ -83,7 +101,7 @@ echo "INPUT_SONARHOSTNAME: $INPUT_SONARHOSTNAME"
 # Build Sonarscanner begin command
 #-----------------------------------
 
-sonar_begin_cmd="/dotnet-sonarscanner begin /k:\"${INPUT_SONARPROJECTKEY}\" /n:\"${INPUT_SONARPROJECTNAME}\" /d:sonar.token=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"${INPUT_SONARHOSTNAME}\""
+sonar_begin_cmd="/dotnet-sonarscanner begin /k:\"${INPUT_SONARPROJECTKEY}\" /n:\"${INPUT_SONARPROJECTNAME}\" /d:sonar.host.url=\"${INPUT_SONARHOSTNAME}\""
 if [ -n "$INPUT_SONARORGANIZATION" ]; then
     sonar_begin_cmd="$sonar_begin_cmd /o:\"${INPUT_SONARORGANIZATION}\""
 fi
@@ -113,7 +131,7 @@ sonar_begin_cmd="$sonar_begin_cmd /d:sonar.scanner.skipJreProvisioning=true"
 #-----------------------------------
 # Build Sonarscanner end command
 #-----------------------------------
-sonar_end_cmd="/dotnet-sonarscanner end /d:sonar.token=\"${SONAR_TOKEN}\""
+sonar_end_cmd="/dotnet-sonarscanner end"
 
 #-----------------------------------
 # Build pre build command

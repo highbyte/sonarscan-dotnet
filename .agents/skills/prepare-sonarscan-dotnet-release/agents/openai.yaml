@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prepare SonarScanner release"
+  short_description: "Prepare and verify beta or stable scanner releases"
+  default_prompt: "Use $prepare-sonarscan-dotnet-release to prepare and verify a SonarScanner for .NET release."
