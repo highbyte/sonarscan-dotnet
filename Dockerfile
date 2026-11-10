@@ -1,6 +1,6 @@
-FROM mcr.microsoft.com/dotnet/aspnet:10.0.12 AS scanner-runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.15 AS scanner-runtime
 
-FROM mcr.microsoft.com/dotnet/sdk:11.0.100-rc.2
+FROM mcr.microsoft.com/dotnet/sdk:11.0.100
 
 LABEL "com.github.actions.name"="sonarscan-dotnet"
 LABEL "com.github.actions.description"="SonarScanner for .NET 11 with pull request decoration support."
@@ -21,7 +21,7 @@ ENV SONAR_SCANNER_DOTNET_TOOL_VERSION=11.3.0 \
 # Fix JRE Install https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
 RUN mkdir -p /usr/share/man/man1
 
-# Install a stable .NET runtime for SonarScanner alongside the prerelease SDK.
+# Install the .NET 10 runtime required by SonarScanner alongside the .NET 11 SDK.
 COPY --from=scanner-runtime /usr/share/dotnet/shared /usr/share/dotnet/shared
 
 # Install NodeJS

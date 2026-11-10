@@ -6,7 +6,7 @@ A release has two artifacts: the GHCR Docker image and the GitHub action tag. Th
 
 | Release | Preparation | GitHub release |
 | --- | --- | --- |
-| Beta | Use a preview/RC SDK for a new .NET version, or a final SDK for a dependency candidate. Choose a unique version such as `v2.6.0-beta2`. | Target the tested feature branch/commit; select **Set as a pre-release**. |
+| Beta | Use a preview/RC SDK for a new .NET version, or a final SDK for a dependency candidate. Choose an unused prerelease version. | Target the tested feature branch/commit; select **Set as a pre-release**. |
 | Stable .NET upgrade | Wait for the final SDK, update the Dockerfile and sample target framework, rebuild, and repeat verification. Retagging an RC image does not upgrade its SDK. | Normally merge approved, tested changes into the configured default branch first; leave **Set as a pre-release** unchecked. |
 | Stable dependency update | Keep a final SDK, bump dependencies, and choose the appropriate next version. | Follow the same stable verification path. |
 
@@ -19,7 +19,7 @@ gh repo view highbyte/sonarscan-dotnet --json defaultBranchRef --jq '.defaultBra
 From the scanner checkout, set the candidate version and branch:
 
 ```sh
-RELEASE_VERSION=v2.6.0-beta2
+RELEASE_VERSION=v2.6.0
 SCANNER_BRANCH=feature/net11-dependencies
 IMAGE="ghcr.io/highbyte/sonarscan-dotnet:$RELEASE_VERSION"
 ```

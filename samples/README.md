@@ -7,7 +7,7 @@ Run commands from the repository root. Requirements: Docker, Git, Python 3, and 
 ## Local build, tests, and coverage
 
 ```sh
-samples/verify-image.sh --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta2 --build-only
+samples/verify-image.sh --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0 --build-only
 ```
 
 The verifier uses the daemon selected during host setup, including an exported `DOCKER_CONTEXT` on macOS. Use `--help` for other options. `--build-only` requires no credentials and performs no SonarCloud upload.
@@ -21,14 +21,14 @@ Use Windows PowerShell 5.1 or PowerShell 7 with Python 3, Git, and Docker Deskto
 From the repository root:
 
 ```powershell
-docker pull --platform linux/amd64 ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta2
-.\samples\verify-image.ps1 --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta2 --build-only
+docker pull --platform linux/amd64 ghcr.io/highbyte/sonarscan-dotnet:v2.6.0
+.\samples\verify-image.ps1 --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0 --build-only
 ```
 
 The PowerShell launcher accepts the same options as the Bash launcher and returns the verifier's exit code. Use `--help` to list options. After configuring the SonarCloud project as described below and supplying `SONAR_TOKEN` in the process environment through your approved credential mechanism, run:
 
 ```powershell
-.\samples\verify-image.ps1 --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta2 `
+.\samples\verify-image.ps1 --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0 `
   --project-key your-org_sonarscan-dotnet-sample --organization your-org `
   --branch sample-verification
 ```
@@ -54,7 +54,7 @@ printf 'SonarCloud token: ' >&2
 IFS= read -r -s SONAR_TOKEN
 printf '\n' >&2
 export SONAR_TOKEN
-samples/verify-image.sh --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0-beta2 \
+samples/verify-image.sh --image ghcr.io/highbyte/sonarscan-dotnet:v2.6.0 \
   --project-key your-org_sonarscan-dotnet-sample --organization your-org \
   --branch sample-verification
 )
@@ -75,9 +75,9 @@ Pushes verify the action at the workflow commit and register the verification wo
 gh workflow run verify-sample.yml --repo highbyte/sonarscan-dotnet \
   --ref feature/net11-dependencies -f action_ref=feature/net11-dependencies
 
-# Published beta; use the exact stable tag for stable-release verification.
+# Published release; use its exact tag for verification.
 gh workflow run verify-sample.yml --repo highbyte/sonarscan-dotnet \
-  --ref feature/net11-dependencies -f action_ref=v2.6.0-beta2
+  --ref feature/net11-dependencies -f action_ref=v2.6.0
 
 gh run list --repo highbyte/sonarscan-dotnet --workflow verify-sample.yml --limit 5
 ```
