@@ -165,21 +165,21 @@ Watch the new run with `gh run watch RUN_ID --repo highbyte/sonarscan-dotnet --e
 
 ## Optional agent skill
 
-[release-sonarscan-dotnet](.agents/skills/release-sonarscan-dotnet/SKILL.md) guides the release stages using this document and the sample scripts. The repository includes regular files in both discovery locations, so no installation or symlink support is needed when working in this checkout:
+[prepare-sonarscan-dotnet-release](.agents/skills/prepare-sonarscan-dotnet-release/SKILL.md) is an optional guide for release preparation and verification using this document and the sample scripts. The owner can publish through GitHub.com's **Create release** page; agent-driven publication requires explicit authorization. The repository includes regular files in both discovery locations, so no installation or symlink support is needed when working in this checkout:
 
 | Agent | Repository skill | Invocation |
 | --- | --- | --- |
-| Codex | [`.agents/skills/release-sonarscan-dotnet/SKILL.md`](.agents/skills/release-sonarscan-dotnet/SKILL.md) | `$release-sonarscan-dotnet` |
-| Claude Code | [`.claude/skills/release-sonarscan-dotnet/SKILL.md`](.claude/skills/release-sonarscan-dotnet/SKILL.md) | `/release-sonarscan-dotnet` |
+| Codex | [`.agents/skills/prepare-sonarscan-dotnet-release/SKILL.md`](.agents/skills/prepare-sonarscan-dotnet-release/SKILL.md) | `$prepare-sonarscan-dotnet-release` |
+| Claude Code | [`.claude/skills/prepare-sonarscan-dotnet-release/SKILL.md`](.claude/skills/prepare-sonarscan-dotnet-release/SKILL.md) | `/prepare-sonarscan-dotnet-release` |
 
 Include beta or stable and the intended version in the request. Detailed procedures and scripts remain shared in this repository.
 
-Edit `.agents/skills/release-sonarscan-dotnet/SKILL.md`, then copy the instructions to the Claude Code location:
+Edit `.agents/skills/prepare-sonarscan-dotnet-release/SKILL.md`, then copy the instructions to the Claude Code location:
 
 ```sh
-cp .agents/skills/release-sonarscan-dotnet/SKILL.md .claude/skills/release-sonarscan-dotnet/SKILL.md
+cp .agents/skills/prepare-sonarscan-dotnet-release/SKILL.md .claude/skills/prepare-sonarscan-dotnet-release/SKILL.md
 ```
 
-Codex metadata stays in `.agents/skills/release-sonarscan-dotnet/agents/openai.yaml`; it does not need a Claude Code copy. The Docker build workflow checks that the two `SKILL.md` files match before building the image. Synchronization is manual; CI fails if the copies differ.
+Codex metadata stays in `.agents/skills/prepare-sonarscan-dotnet-release/agents/openai.yaml`; it does not need a Claude Code copy. The Docker build workflow checks that the two `SKILL.md` files match before building the image. Synchronization is manual; CI fails if the copies differ.
 
 For use outside this checkout, install the matching repository skill folder in the agent's user skills directory (`~/.agents/skills/` for Codex or `~/.claude/skills/` for Claude Code), inspecting an existing installation before replacing it. Other agents supporting `SKILL.md` can install the instructions in their own skill location.
